@@ -14,7 +14,7 @@ namespace AdminApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(frmMain.Instance);
+            Application.Run(frmCategories.Instance);
         }
     }
 }

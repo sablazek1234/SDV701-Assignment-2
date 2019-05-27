@@ -26,6 +26,21 @@ namespace AdminApp
 
         }
 
+        internal async static Task<List<string>> GetProductNamesAsync()
+        {
+            using (HttpClient lcHttpClient = new HttpClient())
+                return JsonConvert.DeserializeObject<List<string>>
+            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetProductNames/"));
+        }
+
+        internal async static Task<clsProduct> GetProductAsync(string prProductName)
+        {
+            using (HttpClient lcHttpClient = new HttpClient())
+                return JsonConvert.DeserializeObject<clsProduct>
+            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetProduct?CategoryName=" + prProductName));
+
+        }
+
         private async static Task<string> InsertOrUpdateAsync<TItem>(TItem prItem, string prUrl, string prRequest)
         {
             using (HttpRequestMessage lcReqMessage = new HttpRequestMessage(new HttpMethod(prRequest), prUrl))

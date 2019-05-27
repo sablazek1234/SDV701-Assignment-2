@@ -12,52 +12,57 @@ namespace AdminApp
 {
     public partial class frmProductsList : Form
     {
-        protected clsProduct _Product;
+        protected clsProduct _Product = new clsProduct();
 
-        public delegate void LoadWorkFormDelegate(clsProduct prProduct);
+        private static readonly frmProductsList _Instance = new frmProductsList();
 
-        public static Dictionary<char, Delegate> _ProductsForm = new Dictionary<char, Delegate>
-        {
-            //{'N', new LoadWorkFormDelegate(frmNew.Run)},
-            //{'U', new LoadWorkFormDelegate(frmUsed.Run)}
-        };
+        private static Dictionary<string, frmProductsList> _ProductsList =
+        new Dictionary<string, frmProductsList>();
 
-        public static void DispatchWorkForm(clsProduct prProduct)
-        {
-            //_ProductsForm[prProduct.ProductName].DynamicInvoke(prProduct);
-        }
+        //public delegate void LoadWorkFormDelegate(clsProduct prProduct);
+
+        //public static Dictionary<char, Delegate> _ProductsList = new Dictionary<char, Delegate>
+        //{
+        //    {'N', new LoadWorkFormDelegate(frmNew.Run)},
+        //    {'U', new LoadWorkFormDelegate(frmUsed.Run)}
+        //};
 
         public frmProductsList()
         {
             InitializeComponent();
         }
 
-        //public static void Run(string prProductName)
-        //{
-        //    frmProducts lcProductForm;
-        //    if (string.IsNullOrEmpty(prProductName) ||
-        //    !_ProductList.TryGetValue(prProductName, out lcProductForm))
-        //    {
-        //        lcProductForm = new frmProducts();
-        //        if (string.IsNullOrEmpty(prProductName))
-        //            lcProductForm.SetDetails(new clsProduct());
-        //        else
-        //        {
-        //            _ProductList.Add(prProductName, lcProductForm);
-        //            lcProductForm.refreshFormFromDB(prProductName);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        lcProductForm.Show();
-        //        lcProductForm.Activate();
-        //    }
-        //}
+        public static frmProductsList Instance
+        {
+            get { return _Instance; }
+        }
 
-        //private async void refreshFormFromDB(string prProductName)
-        //{
-        //    //SetDetails(await ServiceClient.InsertProductAsync(prProductName));
-        //}
+        public static void Run(string prProductName)
+        {
+            frmProductsList lcProductForm;
+            if (string.IsNullOrEmpty(prProductName) ||
+            !_ProductsList.TryGetValue(prProductName, out lcProductForm))
+            {
+                lcProductForm = new frmProductsList();
+                if (string.IsNullOrEmpty(prProductName))
+                    lcProductForm.SetDetails(new clsProduct());
+                else
+                {
+                    _ProductsList.Add(prProductName, lcProductForm);
+                    lcProductForm.refreshFormFromDB(prProductName);
+                }
+            }
+            else
+            {
+                lcProductForm.Show();
+                lcProductForm.Activate();
+            }
+        }
+
+        private async void refreshFormFromDB(string prProductName)
+        {
+            SetDetails(await ServiceClient.GetProductAsync(prProductName));
+        }
 
         private void updateTitle(string prInventoryName)
         {
@@ -65,8 +70,11 @@ namespace AdminApp
                 Text = "Product Details - " + prInventoryName;
         }
 
-        private void UpdateDisplay()
+        private async void UpdateDisplay()
         {
+            listProducts.DataSource = null;
+            listProducts.DataSource = await ServiceClient.GetProductNamesAsync();
+
             //listProducts.DataSource = null;
             //if (_Product.ProductList != null)
             //    listProducts.DataSource = _Product.ProductList;

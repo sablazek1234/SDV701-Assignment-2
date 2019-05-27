@@ -59,7 +59,7 @@ namespace AdminApp
         private void updateTitle(string prInventoryName)
         {
             if (!string.IsNullOrEmpty(prInventoryName))
-                Text = "Product Details - " + prInventoryName;
+                Text = "Category Details - " + prInventoryName;
         }
 
         public async void UpdateDisplay()
@@ -69,8 +69,6 @@ namespace AdminApp
             //clsCategory[] lcDisplayList = new clsCategory[_CategoryList.Count];
             //_CategoryList.Keys.CopyTo(lcDisplayList, 0);
             //listCategories.DataSource = lcDisplayList;
-
-
         }
 
         public void SetDetails(clsCategory prCategory)
@@ -88,7 +86,7 @@ namespace AdminApp
             //if (lcKey != null)
             try
             {
-                frmCategories.Run(listCategories.SelectedItem as string);
+                frmProductsList.Run(listCategories.SelectedItem as string);
             }
             catch (Exception ex)
             {
