@@ -22,7 +22,7 @@ namespace AdminApp
         {
             using (HttpClient lcHttpClient = new HttpClient())
                 return JsonConvert.DeserializeObject<clsCategory>
-            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetCategory?Name=" + prCategoryName));
+            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetCategory?CategoryName=" + prCategoryName));
 
         }
 

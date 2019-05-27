@@ -14,22 +14,35 @@ namespace AdminApp
     {
         private clsCategory _Category = new clsCategory();
 
-        private static Dictionary<clsCategory, frmCategories> _CategoryList =
-        new Dictionary<clsCategory, frmCategories>();
+        private static readonly frmCategories _Instance = new frmCategories();
+
+        private static Dictionary<string, frmCategories> _CategoryList =
+        new Dictionary<string, frmCategories>();
 
         private frmCategories()
         {
             InitializeComponent();
         }
 
-        public static void Run(clsCategory prCategoryName)
+        public static frmCategories Instance
+        {
+            get { return _Instance; }
+        }
+
+        public static void Run(string prCategoryName)
         {
             frmCategories lcCategoryForm;
-            if (!_CategoryList.TryGetValue(prCategoryName, out lcCategoryForm))
+            if (string.IsNullOrEmpty(prCategoryName) ||
+            !_CategoryList.TryGetValue(prCategoryName, out lcCategoryForm))
             {
                 lcCategoryForm = new frmCategories();
-                _CategoryList.Add(prCategoryName, lcCategoryForm);
-                lcCategoryForm.SetDetails(prCategoryName);
+                if (string.IsNullOrEmpty(prCategoryName))
+                    lcCategoryForm.SetDetails(new clsCategory());
+                else
+                {
+                    _CategoryList.Add(prCategoryName, lcCategoryForm);
+                    lcCategoryForm.refreshFormFromDB(prCategoryName);
+                }
             }
             else
             {
@@ -49,12 +62,15 @@ namespace AdminApp
                 Text = "Product Details - " + prInventoryName;
         }
 
-        public void UpdateDisplay()
+        public async void UpdateDisplay()
         {
             listCategories.DataSource = null;
-            clsCategory[] lcDisplayList = new clsCategory[_CategoryList.Count];
-            _CategoryList.Keys.CopyTo(lcDisplayList, 0);
-            listCategories.DataSource = lcDisplayList;
+            listCategories.DataSource = await ServiceClient.GetCategoryNamesAsync();
+            //clsCategory[] lcDisplayList = new clsCategory[_CategoryList.Count];
+            //_CategoryList.Keys.CopyTo(lcDisplayList, 0);
+            //listCategories.DataSource = lcDisplayList;
+
+
         }
 
         public void SetDetails(clsCategory prCategory)
@@ -70,14 +86,14 @@ namespace AdminApp
 
             //lcKey = Convert.ToString(listCategories.SelectedItem);
             //if (lcKey != null)
-            //    try
-            //    {
-            //        frmProducts.Run(_CategoryList[lcKey]);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show(ex.Message, "This should never occur");
-            //    }
+            try
+            {
+                frmCategories.Run(listCategories.SelectedItem as string);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "This should never occur");
+            }
         }
 
         private void btnQuit_Click(object sender, EventArgs e)

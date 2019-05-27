@@ -60,6 +60,7 @@
             this.Controls.Add(this.listCategories);
             this.Name = "frmCategories";
             this.Text = "frmCategories";
+            this.Load += new System.EventHandler(this.frmCategories_Load);
             this.ResumeLayout(false);
 
         }

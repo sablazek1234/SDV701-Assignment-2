@@ -31,7 +31,8 @@ namespace AdminApp
         {
             try
             {
-                frmCategories.Run(new clsCategory(_CategoryList));
+                //  frmCategories.Run(new clsCategory());
+                frmCategories.Instance.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -43,7 +44,7 @@ namespace AdminApp
         {
             try
             {
-                frmOrderDetails.Run(new clsOrderDetails(_OrderDetailsList));
+             //   frmOrderDetails.Run(new clsOrderDetails());
             }
             catch (Exception ex)
             {
@@ -53,7 +54,7 @@ namespace AdminApp
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
     }
 }
