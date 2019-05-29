@@ -24,10 +24,9 @@ namespace AdminApp
         public string NewOrUsed { get; set; }
         public string Warranty { get; set; }
         public string Condition { get; set; }
-        public decimal Price { get; set; }
         public int Quantity { get; set; }
         public DateTime DateModified { get; set; }
-    
+
 
         public override string ToString()
         {
@@ -35,11 +34,11 @@ namespace AdminApp
         }
 
         public static readonly string FACTORY_PROMPT = "Enter N for New and U for Used";
-        
-        //public static clsProduct NewProduct(int prChoice)
-        //{
-        //    return new clsProduct() { ProductName = Char.ToUpper(prChoice) };
-        //}
+
+        public static clsProduct NewProduct(char prChoice)
+        {
+            return new clsProduct() { NewOrUsed = prChoice.ToString() };
+        }
     }
 
     public class clsOrderDetails
@@ -51,6 +50,6 @@ namespace AdminApp
         public decimal Price { get; set; }
         public DateTime DatePurchased { get; set; }
 
-        public List<clsProduct> OrderDetailsList { get; set; }
+        //public List<clsProduct> OrderDetailsList { get; set; }
     }
 }

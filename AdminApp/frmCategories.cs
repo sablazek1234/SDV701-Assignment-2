@@ -29,27 +29,27 @@ namespace AdminApp
             get { return _Instance; }
         }
 
-        public static void Run(string prCategoryName)
-        {
-            frmCategories lcCategoryForm;
-            if (string.IsNullOrEmpty(prCategoryName) ||
-            !_CategoryList.TryGetValue(prCategoryName, out lcCategoryForm))
-            {
-                lcCategoryForm = new frmCategories();
-                if (string.IsNullOrEmpty(prCategoryName))
-                    lcCategoryForm.SetDetails(new clsCategory());
-                else
-                {
-                    _CategoryList.Add(prCategoryName, lcCategoryForm);
-                    lcCategoryForm.refreshFormFromDB(prCategoryName);
-                }
-            }
-            else
-            {
-                lcCategoryForm.Show();
-                lcCategoryForm.Activate();
-            }
-        }
+        //public static void Run(string prCategoryName)
+        //{
+        //    frmCategories lcCategoryForm;
+        //    if (string.IsNullOrEmpty(prCategoryName) ||
+        //    !_CategoryList.TryGetValue(prCategoryName, out lcCategoryForm))
+        //    {
+        //        lcCategoryForm = new frmCategories();
+        //        if (string.IsNullOrEmpty(prCategoryName))
+        //            lcCategoryForm.SetDetails(new clsCategory());
+        //        else
+        //        {
+        //            _CategoryList.Add(prCategoryName, lcCategoryForm);
+        //            lcCategoryForm.refreshFormFromDB(prCategoryName);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        lcCategoryForm.Show();
+        //        lcCategoryForm.Activate();
+        //    }
+        //}
 
         private async void refreshFormFromDB(string prCategoryName)
         {
@@ -78,20 +78,16 @@ namespace AdminApp
             Show();
         }
 
-        private void listCategories_DoubleClick(object sender, EventArgs e)
+        private void btnOrders_Click(object sender, EventArgs e)
         {
-            //string lcKey;
-
-            //lcKey = Convert.ToString(listCategories.SelectedItem);
-            //if (lcKey != null)
-            try
-            {
-                frmProductsList.Run(listCategories.SelectedItem as string);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "This should never occur");
-            }
+            //try
+            //{
+            //    frmOrderDetails.Run();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "This should never occur");
+            //}
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
@@ -102,6 +98,19 @@ namespace AdminApp
         private void frmCategories_Load(object sender, EventArgs e)
         {
             UpdateDisplay();
+        }
+
+        private void listCategories_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                //    frmProductsList.Run(listCategories.SelectedItem as string);
+                frmProductsList.Instance.ShowDialog(listCategories.SelectedItem as string);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "This should never occur");
+            }
         }
     }
 }

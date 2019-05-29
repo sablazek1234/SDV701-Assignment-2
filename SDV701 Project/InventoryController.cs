@@ -24,27 +24,37 @@ namespace APISelfHosted
             Dictionary<string, object> par = new Dictionary<string, object>(1);
             par.Add("Category", CategoryName);
             DataTable lcResult =
-        clsDBConnection.GetDataTable("SELECT * FROM tblCategory WHERE Category = @Category", par);
+            clsDBConnection.GetDataTable("SELECT * FROM tblCategory WHERE Category = @Category", par);
             if (lcResult.Rows.Count > 0)
                 return new clsCategory()
                 {
                     Category = (string)lcResult.Rows[0]["Category"],
                     Description = (string)lcResult.Rows[0]["Description"],
-                    ProductList = getProduct(CategoryName)
+                    ProductList = GetProducts(CategoryName)
                 };
             else
                 return null;
         }
 
-        private List<clsProduct> getProduct(string ProductName)
+        public List<string> GetProductNames()
+        {
+            DataTable lcResult = clsDBConnection.GetDataTable("SELECT ProductName FROM tblProduct", null);
+            List<string> lcNames = new List<string>();
+            foreach (DataRow dr in lcResult.Rows)
+                lcNames.Add((string)dr[0]);
+            return lcNames;
+        }
+
+        private List<clsProduct> GetProducts(string CategoryName)
         {
             Dictionary<string, object> par = new Dictionary<string, object>(1);
-            par.Add("ProductName", ProductName);
-            DataTable lcResult = clsDBConnection.GetDataTable("SELECT * FROM tblProduct WHERE ProductName = @ProductName", par);
-            List<clsProduct> lcWorks = new List<clsProduct>();
+            par.Add("CategoryName", CategoryName);
+            DataTable lcResult = 
+            clsDBConnection.GetDataTable("SELECT * FROM tblProduct WHERE Category = @CategoryName", par);
+            List<clsProduct> lcProducts = new List<clsProduct>();
             foreach (DataRow dr in lcResult.Rows)
-                lcWorks.Add(dataRowProduct(dr));
-            return lcWorks;
+                lcProducts.Add(dataRowProduct(dr));
+            return lcProducts;
 
         }
 
@@ -58,6 +68,7 @@ namespace APISelfHosted
                 Brand = Convert.ToString(prDataRow["Brand"]),
                 NewOrUsed = Convert.ToString(prDataRow["NewOrUsed"]),
                 Warranty = Convert.ToString(prDataRow["Warranty"]),
+                Condition = Convert.ToString(prDataRow["Condition"]),
                 Quantity = Convert.ToInt16(prDataRow["Quantity"]),
                 DateModified = Convert.ToDateTime(prDataRow["DateModified"]),
             };
@@ -82,9 +93,8 @@ namespace APISelfHosted
             }
         }
 
-        //?????????????????????????????????????????????????????
         public string DeleteProduct(string ProductName)
-        {   // delete
+        { 
             try
             {
                 int lcRecCount = clsDBConnection.Execute(
@@ -126,14 +136,14 @@ namespace APISelfHosted
             return par;
         }
 
-        //?????????????????????????????????????????????
         public string PutProduct(clsProduct prProduct)
-        {   // update
+        {   
             try
             {
                 int lcRecCount = clsDBConnection.Execute("UPDATE tblProduct SET " +
                 "ProductName = @ProductName, ProductType = @ProductType, Brand = @Brand," +
-                "NewOrUsed = @NewOrUsed, Warranty = @Warranty, Quantity = @Quantity, DateModified = @DateModified",
+                "NewOrUsed = @NewOrUsed, Warranty = @Warranty, Condition = @Condition, Quantity = @Quantity," +
+                "DateModified = @DateModified",
                 prepareProductParameters(prProduct));
                 if (lcRecCount == 1)
                     return "One product updated";
@@ -147,12 +157,12 @@ namespace APISelfHosted
         }
 
         public string PostProduct(clsProduct prProduct)
-        {   // insert
+        {  
             try
             {
                 int lcRecCount = clsDBConnection.Execute("INSERT INTO tblProduct " +
-                "(ProductID, ProductName, ProductType, Brand, NewOrUsed, Warranty, Quantity, DateModified) " +
-                "VALUES (@ProductID, @ProductName, @ProductType, @Brand, @NewOrUsed, @Warranty, @Quantity, @DateModified)",
+                "(ProductID, ProductName, ProductType, Brand, NewOrUsed, Warranty, Condition, Quantity, DateModified) " +
+                "VALUES (@ProductID, @ProductName, @ProductType, @Brand, @NewOrUsed, @Warranty, @Condition, @Quantity, @DateModified)",
                 prepareProductParameters(prProduct));
                 if (lcRecCount == 1)
                     return "One product inserted";
@@ -174,6 +184,7 @@ namespace APISelfHosted
             par.Add("Brand", prProduct.Brand);
             par.Add("NewOrUsed", prProduct.NewOrUsed);
             par.Add("Warranty", prProduct.Warranty);
+            par.Add("Condition", prProduct.Condition);
             par.Add("Quantity", prProduct.Quantity);
             par.Add("DateModified", prProduct.DateModified);
             return par;

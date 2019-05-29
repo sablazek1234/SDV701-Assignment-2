@@ -36,16 +36,12 @@
             this.txtProductType = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtBrand = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtWarranty = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtQuantity = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtDateModified = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtNewOrUsed = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnOK
@@ -95,9 +91,9 @@
             // 
             // txtProductType
             // 
-            this.txtProductType.Location = new System.Drawing.Point(97, 45);
+            this.txtProductType.Location = new System.Drawing.Point(92, 45);
             this.txtProductType.Name = "txtProductType";
-            this.txtProductType.Size = new System.Drawing.Size(243, 20);
+            this.txtProductType.Size = new System.Drawing.Size(248, 20);
             this.txtProductType.TabIndex = 5;
             // 
             // label3
@@ -116,26 +112,10 @@
             this.txtBrand.Size = new System.Drawing.Size(283, 20);
             this.txtBrand.TabIndex = 7;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 143);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Warranty:";
-            // 
-            // txtWarranty
-            // 
-            this.txtWarranty.Location = new System.Drawing.Point(72, 140);
-            this.txtWarranty.Name = "txtWarranty";
-            this.txtWarranty.Size = new System.Drawing.Size(268, 20);
-            this.txtWarranty.TabIndex = 9;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 177);
+            this.label5.Location = new System.Drawing.Point(13, 116);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 10;
@@ -143,7 +123,7 @@
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(68, 174);
+            this.txtQuantity.Location = new System.Drawing.Point(68, 113);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(272, 20);
             this.txtQuantity.TabIndex = 11;
@@ -151,7 +131,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 211);
+            this.label6.Location = new System.Drawing.Point(13, 150);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(34, 13);
             this.label6.TabIndex = 12;
@@ -159,7 +139,7 @@
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(53, 208);
+            this.txtPrice.Location = new System.Drawing.Point(53, 147);
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(287, 20);
             this.txtPrice.TabIndex = 13;
@@ -167,7 +147,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 243);
+            this.label7.Location = new System.Drawing.Point(13, 182);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(73, 13);
             this.label7.TabIndex = 14;
@@ -175,42 +155,22 @@
             // 
             // txtDateModified
             // 
-            this.txtDateModified.Location = new System.Drawing.Point(92, 240);
+            this.txtDateModified.Location = new System.Drawing.Point(92, 179);
             this.txtDateModified.Name = "txtDateModified";
             this.txtDateModified.Size = new System.Drawing.Size(248, 20);
             this.txtDateModified.TabIndex = 15;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 113);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(68, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "NewOrUsed:";
-            // 
-            // txtNewOrUsed
-            // 
-            this.txtNewOrUsed.Location = new System.Drawing.Point(86, 110);
-            this.txtNewOrUsed.Name = "txtNewOrUsed";
-            this.txtNewOrUsed.Size = new System.Drawing.Size(254, 20);
-            this.txtNewOrUsed.TabIndex = 17;
             // 
             // frmProductDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(352, 361);
-            this.Controls.Add(this.txtNewOrUsed);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.txtDateModified);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtWarranty);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.txtBrand);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtProductType);
@@ -236,15 +196,11 @@
         private System.Windows.Forms.TextBox txtProductType;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtBrand;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtWarranty;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtQuantity;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtPrice;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtDateModified;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtNewOrUsed;
     }
 }

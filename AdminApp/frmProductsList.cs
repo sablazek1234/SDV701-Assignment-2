@@ -12,7 +12,7 @@ namespace AdminApp
 {
     public partial class frmProductsList : Form
     {
-        protected clsProduct _Product = new clsProduct();
+        protected clsCategory _Category;
 
         private static readonly frmProductsList _Instance = new frmProductsList();
 
@@ -32,79 +32,142 @@ namespace AdminApp
             InitializeComponent();
         }
 
+        //public static void DispatchWorkForm(clsProduct prProduct)
+        //{
+        //    _ProductsList[prProduct.ProductName].DynamicInvoke(prProduct);
+        //}
+
         public static frmProductsList Instance
         {
             get { return _Instance; }
         }
 
-        public static void Run(string prProductName)
+        //public static void Run(string prProductName)
+        //{
+        //    frmProductsList lcProductForm;
+        //    if (string.IsNullOrEmpty(prProductName) ||
+        //    !_ProductsList.TryGetValue(prProductName, out lcProductForm))
+        //    {
+        //        lcProductForm = new frmProductsList();
+        //        if (string.IsNullOrEmpty(prProductName))
+        //            lcProductForm.SetDetails(new clsProduct());
+        //        else
+        //        {
+        //            _ProductsList.Add(prProductName, lcProductForm);
+        //            //lcProductForm.refreshFormFromDB(prProductName);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        lcProductForm.Show();
+        //        lcProductForm.Activate();
+        //    }
+        //}
+
+
+        public async void ShowDialog(string prCategoryName)
         {
-            frmProductsList lcProductForm;
-            if (string.IsNullOrEmpty(prProductName) ||
-            !_ProductsList.TryGetValue(prProductName, out lcProductForm))
-            {
-                lcProductForm = new frmProductsList();
-                if (string.IsNullOrEmpty(prProductName))
-                    lcProductForm.SetDetails(new clsProduct());
-                else
-                {
-                    _ProductsList.Add(prProductName, lcProductForm);
-                    lcProductForm.refreshFormFromDB(prProductName);
-                }
-            }
-            else
-            {
-                lcProductForm.Show();
-                lcProductForm.Activate();
-            }
+            _Category = await ServiceClient.GetCategoryAsync(prCategoryName);
+            UpdateDisplay();
+            ShowDialog();
         }
 
-        private async void refreshFormFromDB(string prProductName)
-        {
-            SetDetails(await ServiceClient.GetProductAsync(prProductName));
-        }
+        //public async void refreshFormFromDB(string prCategoryName)
+        //{
+        //    clsCategory lcCategory = await ServiceClient.GetCategoryAsync(prCategoryName);
+        //    SetDetails(lcCategory);
+        //}
 
-        private void updateTitle(string prInventoryName)
-        {
-            if (!string.IsNullOrEmpty(prInventoryName))
-                Text = "Product Details - " + prInventoryName;
-        }
+        //private void updateTitle(string prInventoryName)
+        //{
+        //    if (!string.IsNullOrEmpty(prInventoryName))
+        //        Text = "Product Details - " + prInventoryName;
+        //}
 
-        private async void UpdateDisplay()
+        private void UpdateDisplay()
         {
+
+            lblCategoryName.Text = _Category.Category + "  " + _Category.Description;
             listProducts.DataSource = null;
-            listProducts.DataSource = await ServiceClient.GetProductNamesAsync();
+            listProducts.DataSource = _Category.ProductList;
 
             //listProducts.DataSource = null;
             //if (_Product.ProductList != null)
             //    listProducts.DataSource = _Product.ProductList;
         }
 
-        public void SetDetails(clsProduct prProduct)
+        //public void SetDetails(clsCategory prCategory)
+        //{
+        //    _Category = prCategory;
+        //    UpdateDisplay();
+        //    Show();
+        //}
+
+        private void listProducts_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            _Product = prProduct;
-            UpdateDisplay();
-            Show();
+            //try
+            //{
+            //    frmProductDetail.Run(listProducts.SelectedItem as string);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "This should never occur");
+            //}
         }
 
         private void btnAddNewProduct_Click(object sender, EventArgs e)
         {
-            //frmNew.Show();
+            try
+            {
+                frmNew.Run(null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "This should never occur");
+            }
         }
 
         private void btnAddUsedProduct_Click(object sender, EventArgs e)
         {
-            //frmUsed.Show();
+            try
+            {
+                frmUsed.Run(null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "This should never occur");
+            }
         }
 
-        private void btnDeleteProduct_Click(object sender, EventArgs e)
+        private async void btnDeleteProduct_Click(object sender, EventArgs e)
         {
+            //string lcKey;
 
+            //lcKey = Convert.ToString(listProducts.SelectedItem);
+            //if (lcKey != null && MessageBox.Show("Are you sure?", "Deleting Product", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //    try
+            //    {
+            //        MessageBox.Show(await ServiceClient.DeleteProductAsync(lcKey));
+            //        listProducts.ClearSelected();
+            //        UpdateDisplay();
+
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message, "Error deleting product");
+            //    }
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
             Close();
         }
+
+        private void frmProductsList_Load(object sender, EventArgs e)
+        {
+            //     SetDetails();
+        }
+
+        
     }
 }

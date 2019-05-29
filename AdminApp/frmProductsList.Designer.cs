@@ -43,6 +43,7 @@
             this.listProducts.Name = "listProducts";
             this.listProducts.Size = new System.Drawing.Size(855, 251);
             this.listProducts.TabIndex = 0;
+            this.listProducts.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listProducts_MouseDoubleClick);
             // 
             // lblCategoryName
             // 
@@ -93,7 +94,7 @@
             this.btnQuit.UseVisualStyleBackColor = true;
             this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
-            // frmProducts
+            // frmProductsList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -104,8 +105,9 @@
             this.Controls.Add(this.btnAddNewProduct);
             this.Controls.Add(this.lblCategoryName);
             this.Controls.Add(this.listProducts);
-            this.Name = "frmProducts";
+            this.Name = "frmProductsList";
             this.Text = "frmProducts";
+            this.Load += new System.EventHandler(this.frmProductsList_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
