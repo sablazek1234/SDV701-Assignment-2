@@ -19,29 +19,21 @@ namespace AdminApp
             InitializeComponent();
         }
 
-        public static void Run(clsProduct prNewProduct)
+        public static void Run(clsProduct prProduct)
         {
-    //        Instance.SetDetails(prNewProduct);
+            Instance.SetDetails(prProduct);
         }
 
         protected override void updateForm()
         {
-            txtProductName.Text = _Product.ProductName.ToString();
-            txtProductType.Text = _Product.ProductType.ToString();
-            txtBrand.Text = _Product.Brand.ToString();
+            base.updateForm();
             txtCondition.Text = _Product.Condition.ToString();
-            txtPrice.Text = _Product.Price.ToString();
-            txtQuantity.Text = _Product.Quantity.ToString();
         }
 
         protected override void pushData()
         {
-            _Product.ProductName = txtProductName.Text;
-            _Product.ProductType = txtProductType.Text;
-            _Product.Brand = txtBrand.Text;
+            base.pushData();
             _Product.Condition = txtCondition.Text;
-            _Product.Price = decimal.Parse(txtPrice.Text);
-            _Product.Quantity = int.Parse(txtQuantity.Text);
         }
     }
 }

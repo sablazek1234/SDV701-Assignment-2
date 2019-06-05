@@ -25,7 +25,8 @@ namespace APISelfHosted
         public string Warranty { get; set; }
         public string Condition { get; set; }
         public int Quantity { get; set; }
-        public DateTime DateModified { get; set; }         
+        public DateTime DateModified { get; set; }  
+        public decimal Price { get; set; }
     }
     
 }

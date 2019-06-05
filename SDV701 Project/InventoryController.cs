@@ -71,6 +71,7 @@ namespace APISelfHosted
                 Condition = Convert.ToString(prDataRow["Condition"]),
                 Quantity = Convert.ToInt16(prDataRow["Quantity"]),
                 DateModified = Convert.ToDateTime(prDataRow["DateModified"]),
+                Price = Convert.ToDecimal(prDataRow["Price"]),
             };
 
         }
@@ -143,7 +144,7 @@ namespace APISelfHosted
                 int lcRecCount = clsDBConnection.Execute("UPDATE tblProduct SET " +
                 "ProductName = @ProductName, ProductType = @ProductType, Brand = @Brand," +
                 "NewOrUsed = @NewOrUsed, Warranty = @Warranty, Condition = @Condition, Quantity = @Quantity," +
-                "DateModified = @DateModified",
+                "DateModified = @DateModified, Price = @Price",
                 prepareProductParameters(prProduct));
                 if (lcRecCount == 1)
                     return "One product updated";
@@ -162,7 +163,7 @@ namespace APISelfHosted
             {
                 int lcRecCount = clsDBConnection.Execute("INSERT INTO tblProduct " +
                 "(ProductID, ProductName, ProductType, Brand, NewOrUsed, Warranty, Condition, Quantity, DateModified) " +
-                "VALUES (@ProductID, @ProductName, @ProductType, @Brand, @NewOrUsed, @Warranty, @Condition, @Quantity, @DateModified)",
+                "VALUES (@ProductID, @ProductName, @ProductType, @Brand, @NewOrUsed, @Warranty, @Condition, @Quantity, @DateModified, @Price)",
                 prepareProductParameters(prProduct));
                 if (lcRecCount == 1)
                     return "One product inserted";
@@ -187,6 +188,7 @@ namespace APISelfHosted
             par.Add("Condition", prProduct.Condition);
             par.Add("Quantity", prProduct.Quantity);
             par.Add("DateModified", prProduct.DateModified);
+            par.Add("Price", prProduct.Price);
             return par;
         }
 

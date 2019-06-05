@@ -14,31 +14,38 @@ namespace AdminApp
     {
         private static readonly frmProductDetail Instance = new frmProductDetail();
 
-        protected clsCategory _Category;
+        protected clsProduct _Product;
 
         public frmProductDetail()
         {
             InitializeComponent();
         }
 
+        public void SetDetails(clsProduct prProduct)
+        {
+            _Product = prProduct;
+            updateForm();
+            ShowDialog();
+        }
+
         protected virtual void updateForm()
         {
-            txtProductName.Text = _Category.ProductName.ToString();
-            txtProductType.Text = _Category.ProductType.ToString();
-            txtBrand.Text = _Category.Brand.ToString();
-            txtPrice.Text = _Category.Price.ToString();
-            txtQuantity.Text = _Category.Quantity.ToString();
-            txtDateModified.Text = _Category.DateModified.ToString();
+            txtProductName.Text = _Product.ProductName.ToString();
+            txtProductType.Text = _Product.ProductType.ToString();
+            txtBrand.Text = _Product.Brand.ToString();
+            txtPrice.Text = _Product.Price.ToString();
+            txtQuantity.Text = _Product.Quantity.ToString();
+            txtDateModified.Text = _Product.DateModified.ToString();
         }
 
         protected virtual void pushData()
         {
-            _Category.ProductName = txtProductName.Text;
-            _Category.ProductType = txtProductType.Text;
-            _Category.Brand = txtBrand.Text;
-            _Category.Price = Decimal.Parse(txtPrice.Text);
-            _Category.Quantity = int.Parse(txtQuantity.Text);
-            _Category.DateModified = DateTime.Parse(txtDateModified.Text);
+            _Product.ProductName = txtProductName.Text;
+            _Product.ProductType = txtProductType.Text;
+            _Product.Brand = txtBrand.Text;
+            _Product.Price = Decimal.Parse(txtPrice.Text);
+            _Product.Quantity = int.Parse(txtQuantity.Text);
+            _Product.DateModified = DateTime.Parse(txtDateModified.Text);
         }
 
         private async void btnOK_Click(object sender, EventArgs e)
@@ -47,9 +54,9 @@ namespace AdminApp
             {
                 pushData();
                 if (txtProductName.Enabled)
-                    MessageBox.Show(await ServiceClient.InsertProductAsync(_Category));
+                    MessageBox.Show(await ServiceClient.InsertProductAsync(_Product));
                 else
-                    MessageBox.Show(await ServiceClient.UpdateProductAsync(_Category));
+                    MessageBox.Show(await ServiceClient.UpdateProductAsync(_Product));
 
                 Close();
             }

@@ -26,7 +26,7 @@ namespace AdminApp
         public string Condition { get; set; }
         public int Quantity { get; set; }
         public DateTime DateModified { get; set; }
-
+        public decimal Price { get; set; }
 
         public override string ToString()
         {

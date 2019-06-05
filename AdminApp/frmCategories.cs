@@ -78,6 +78,19 @@ namespace AdminApp
             Show();
         }
 
+        private void listCategories_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                //    frmProductsList.Run(listCategories.SelectedItem as string);
+                frmProductsList.Instance.ShowDialog(listCategories.SelectedItem as string);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "This should never occur");
+            }
+        }
+
         private void btnOrders_Click(object sender, EventArgs e)
         {
             //try
@@ -98,19 +111,6 @@ namespace AdminApp
         private void frmCategories_Load(object sender, EventArgs e)
         {
             UpdateDisplay();
-        }
-
-        private void listCategories_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                //    frmProductsList.Run(listCategories.SelectedItem as string);
-                frmProductsList.Instance.ShowDialog(listCategories.SelectedItem as string);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "This should never occur");
-            }
         }
     }
 }

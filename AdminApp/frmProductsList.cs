@@ -16,26 +16,26 @@ namespace AdminApp
 
         private static readonly frmProductsList _Instance = new frmProductsList();
 
-        private static Dictionary<string, frmProductsList> _ProductsList =
-        new Dictionary<string, frmProductsList>();
+        //private static Dictionary<string, frmProductsList> _ProductsList =
+        //new Dictionary<string, frmProductsList>();
 
-        //public delegate void LoadWorkFormDelegate(clsProduct prProduct);
+        public delegate void LoadWorkFormDelegate(clsProduct prProduct);
 
-        //public static Dictionary<char, Delegate> _ProductsList = new Dictionary<char, Delegate>
-        //{
-        //    {'N', new LoadWorkFormDelegate(frmNew.Run)},
-        //    {'U', new LoadWorkFormDelegate(frmUsed.Run)}
-        //};
+        public static Dictionary<char, Delegate> _ProductsList = new Dictionary<char, Delegate>
+        {
+            {'N', new LoadWorkFormDelegate(frmNew.Run)},
+            {'U', new LoadWorkFormDelegate(frmUsed.Run)}
+        };
 
         public frmProductsList()
         {
             InitializeComponent();
         }
 
-        //public static void DispatchWorkForm(clsProduct prProduct)
-        //{
-        //    _ProductsList[prProduct.ProductName].DynamicInvoke(prProduct);
-        //}
+        public static void DispatchWorkForm(clsProduct prProduct)
+        {
+            _ProductsList[prProduct.ProductName].DynamicInvoke(prProduct);
+        }
 
         public static frmProductsList Instance
         {

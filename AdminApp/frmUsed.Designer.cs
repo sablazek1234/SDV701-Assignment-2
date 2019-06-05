@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtCondition = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtCondition = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // txtCondition
-            // 
-            this.txtCondition.Location = new System.Drawing.Point(68, 279);
-            this.txtCondition.Name = "txtCondition";
-            this.txtCondition.Size = new System.Drawing.Size(272, 20);
-            this.txtCondition.TabIndex = 29;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 282);
+            this.label4.Location = new System.Drawing.Point(14, 219);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
-            this.label4.TabIndex = 21;
+            this.label4.TabIndex = 18;
             this.label4.Text = "Condition:";
+            // 
+            // txtCondition
+            // 
+            this.txtCondition.Location = new System.Drawing.Point(69, 216);
+            this.txtCondition.Name = "txtCondition";
+            this.txtCondition.Size = new System.Drawing.Size(271, 20);
+            this.txtCondition.TabIndex = 19;
             // 
             // frmUsed
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 353);
+            this.ClientSize = new System.Drawing.Size(351, 294);
             this.Controls.Add(this.txtCondition);
             this.Controls.Add(this.label4);
             this.Name = "frmUsed";
@@ -65,7 +65,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox txtCondition;
+
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtCondition;
     }
 }
