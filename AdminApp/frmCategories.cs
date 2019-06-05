@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AdminApp
+namespace CustomerApp
 {
     public sealed partial class frmCategories : Form
     {
@@ -82,7 +82,7 @@ namespace AdminApp
         {
             try
             {
-                //    frmProductsList.Run(listCategories.SelectedItem as string);
+                //frmProductsList.Run(listCategories.SelectedItem as string);
                 frmProductsList.Instance.ShowDialog(listCategories.SelectedItem as string);
             }
             catch (Exception ex)

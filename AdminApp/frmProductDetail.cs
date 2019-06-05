@@ -8,17 +8,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AdminApp
+namespace CustomerApp
 {
     public partial class frmProductDetail : Form
     {
         private static readonly frmProductDetail Instance = new frmProductDetail();
+
+        private static Dictionary<string, frmProductsList> _ProductsList =
+        new Dictionary<string, frmProductsList>();
 
         protected clsProduct _Product;
 
         public frmProductDetail()
         {
             InitializeComponent();
+        }
+
+        public static void DispatchWorkForm(clsProduct prProduct)
+        {
+            //_ProductsList[prProduct.ProductName].DynamicInvoke(prProduct);
+        }
+
+        public static void Run(clsProduct prProduct)
+        {
+            Instance.SetDetails(prProduct);
         }
 
         public void SetDetails(clsProduct prProduct)

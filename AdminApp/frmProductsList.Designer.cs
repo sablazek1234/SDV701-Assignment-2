@@ -1,4 +1,4 @@
-﻿namespace AdminApp
+﻿namespace CustomerApp
 {
     partial class frmProductsList
     {
@@ -34,6 +34,7 @@
             this.btnAddUsedProduct = new System.Windows.Forms.Button();
             this.btnDeleteProduct = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
+            this.lblDescription = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listProducts
@@ -94,11 +95,21 @@
             this.btnQuit.UseVisualStyleBackColor = true;
             this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
+            // lblDescription
+            // 
+            this.lblDescription.AutoSize = true;
+            this.lblDescription.Location = new System.Drawing.Point(12, 51);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(35, 13);
+            this.lblDescription.TabIndex = 6;
+            this.lblDescription.Text = "label1";
+            // 
             // frmProductsList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(879, 364);
+            this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnDeleteProduct);
             this.Controls.Add(this.btnAddUsedProduct);
@@ -121,5 +132,6 @@
         private System.Windows.Forms.Button btnAddUsedProduct;
         private System.Windows.Forms.Button btnDeleteProduct;
         private System.Windows.Forms.Button btnQuit;
+        private System.Windows.Forms.Label lblDescription;
     }
 }

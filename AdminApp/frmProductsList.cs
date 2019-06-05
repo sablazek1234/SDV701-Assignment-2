@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AdminApp
+namespace CustomerApp
 {
     public partial class frmProductsList : Form
     {
@@ -30,11 +30,6 @@ namespace AdminApp
         public frmProductsList()
         {
             InitializeComponent();
-        }
-
-        public static void DispatchWorkForm(clsProduct prProduct)
-        {
-            _ProductsList[prProduct.ProductName].DynamicInvoke(prProduct);
         }
 
         public static frmProductsList Instance
@@ -64,7 +59,7 @@ namespace AdminApp
         //    }
         //}
 
-
+        //??????????????????????????????????????????????????????????????
         public async void ShowDialog(string prCategoryName)
         {
             _Category = await ServiceClient.GetCategoryAsync(prCategoryName);
@@ -87,7 +82,8 @@ namespace AdminApp
         private void UpdateDisplay()
         {
 
-            lblCategoryName.Text = _Category.Category + "  " + _Category.Description;
+            lblCategoryName.Text = _Category.Category;
+            lblDescription.Text = _Category.Description;
             listProducts.DataSource = null;
             listProducts.DataSource = _Category.ProductList;
 
@@ -96,6 +92,7 @@ namespace AdminApp
             //    listProducts.DataSource = _Product.ProductList;
         }
 
+        //????????????????????????????????????????????????????
         //public void SetDetails(clsCategory prCategory)
         //{
         //    _Category = prCategory;
@@ -105,14 +102,14 @@ namespace AdminApp
 
         private void listProducts_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //try
-            //{
-            //    frmProductDetail.Run(listProducts.SelectedItem as string);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "This should never occur");
-            //}
+            try
+            {
+                frmProductDetail.DispatchWorkForm(listProducts.SelectedValue as clsProduct);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "This should never occur");
+            }
         }
 
         private void btnAddNewProduct_Click(object sender, EventArgs e)
@@ -141,21 +138,7 @@ namespace AdminApp
 
         private async void btnDeleteProduct_Click(object sender, EventArgs e)
         {
-            //string lcKey;
-
-            //lcKey = Convert.ToString(listProducts.SelectedItem);
-            //if (lcKey != null && MessageBox.Show("Are you sure?", "Deleting Product", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //    try
-            //    {
-            //        MessageBox.Show(await ServiceClient.DeleteProductAsync(lcKey));
-            //        listProducts.ClearSelected();
-            //        UpdateDisplay();
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show(ex.Message, "Error deleting product");
-            //    }
+            MessageBox.Show(await ServiceClient.DeleteProductAsync(listProducts.SelectedItem as clsProduct));
         }
 
         private void btnQuit_Click(object sender, EventArgs e)

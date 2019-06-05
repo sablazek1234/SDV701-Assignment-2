@@ -30,7 +30,7 @@ namespace CustomerApp
 
         public override string ToString()
         {
-            return ProductName + "\t" + DateModified.ToShortDateString();
+            return ProductName + "\t" + DateModified.ToString("d");
         }
 
         public static readonly string FACTORY_PROMPT = "Enter N for New and U for Used";
