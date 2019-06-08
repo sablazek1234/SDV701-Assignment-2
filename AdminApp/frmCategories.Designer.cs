@@ -1,4 +1,4 @@
-﻿namespace CustomerApp
+﻿namespace AdminApp
 {
     partial class frmCategories
     {

@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CustomerApp
+namespace AdminApp
 {
-    public sealed partial class frmUsed : CustomerApp.frmProductDetail
+    public sealed partial class frmUsed : AdminApp.frmProductDetail
     {
         private static readonly frmUsed Instance = new frmUsed();
 

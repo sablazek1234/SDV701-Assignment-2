@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CustomerApp
+namespace AdminApp
 {
     public partial class frmProductsList : Form
     {
