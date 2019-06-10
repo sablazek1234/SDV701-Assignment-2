@@ -16,16 +16,8 @@ namespace AdminApp
 
         private static readonly frmProductsList _Instance = new frmProductsList();
 
-        //private static Dictionary<string, frmProductsList> _ProductsList =
-        //new Dictionary<string, frmProductsList>();
-
-        public delegate void LoadWorkFormDelegate(clsProduct prProduct);
-
-        public static Dictionary<char, Delegate> _ProductsList = new Dictionary<char, Delegate>
-        {
-            {'N', new LoadWorkFormDelegate(frmNew.Run)},
-            {'U', new LoadWorkFormDelegate(frmUsed.Run)}
-        };
+        private static Dictionary<string, frmProductsList> _ProductsList =
+        new Dictionary<string, frmProductsList>();
 
         public frmProductsList()
         {
@@ -37,27 +29,27 @@ namespace AdminApp
             get { return _Instance; }
         }
 
-        //public static void Run(string prProductName)
-        //{
-        //    frmProductsList lcProductForm;
-        //    if (string.IsNullOrEmpty(prProductName) ||
-        //    !_ProductsList.TryGetValue(prProductName, out lcProductForm))
-        //    {
-        //        lcProductForm = new frmProductsList();
-        //        if (string.IsNullOrEmpty(prProductName))
-        //            lcProductForm.SetDetails(new clsProduct());
-        //        else
-        //        {
-        //            _ProductsList.Add(prProductName, lcProductForm);
-        //            //lcProductForm.refreshFormFromDB(prProductName);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        lcProductForm.Show();
-        //        lcProductForm.Activate();
-        //    }
-        //}
+        public static void Run(string prProductName)
+        {
+            frmProductsList lcProductForm;
+            if (string.IsNullOrEmpty(prProductName) ||
+            !_ProductsList.TryGetValue(prProductName, out lcProductForm))
+            {
+                lcProductForm = new frmProductsList();
+                if (string.IsNullOrEmpty(prProductName))
+                    lcProductForm.SetDetails(new clsCategory());
+                else
+                {
+                    _ProductsList.Add(prProductName, lcProductForm);
+                    lcProductForm.refreshFormFromDB(prProductName);
+                }
+            }
+            else
+            {
+                lcProductForm.Show();
+                lcProductForm.Activate();
+            }
+        }
 
         //??????????????????????????????????????????????????????????????
         public async void ShowDialog(string prCategoryName)
@@ -67,17 +59,17 @@ namespace AdminApp
             ShowDialog();
         }
 
-        //public async void refreshFormFromDB(string prCategoryName)
-        //{
-        //    clsCategory lcCategory = await ServiceClient.GetCategoryAsync(prCategoryName);
-        //    SetDetails(lcCategory);
-        //}
+        public async void refreshFormFromDB(string prCategoryName)
+        {
+            clsCategory lcCategory = await ServiceClient.GetCategoryAsync(prCategoryName);
+            SetDetails(lcCategory);
+        }
 
-        //private void updateTitle(string prInventoryName)
-        //{
-        //    if (!string.IsNullOrEmpty(prInventoryName))
-        //        Text = "Product Details - " + prInventoryName;
-        //}
+        private void updateTitle(string prInventoryName)
+        {
+            if (!string.IsNullOrEmpty(prInventoryName))
+                Text = "Product Details - " + prInventoryName;
+        }
 
         private void UpdateDisplay()
         {
@@ -93,12 +85,12 @@ namespace AdminApp
         }
 
         //????????????????????????????????????????????????????
-        //public void SetDetails(clsCategory prCategory)
-        //{
-        //    _Category = prCategory;
-        //    UpdateDisplay();
-        //    Show();
-        //}
+        public void SetDetails(clsCategory prCategory)
+        {
+            _Category = prCategory;
+            UpdateDisplay();
+            Show();
+        }
 
         private void listProducts_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -114,28 +106,49 @@ namespace AdminApp
 
         private void btnAddNewProduct_Click(object sender, EventArgs e)
         {
-            try
-            {
-                frmNew.Run(null);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "This should never occur");
-            }
+            createNewProduct("N");
         }
 
         private void btnAddUsedProduct_Click(object sender, EventArgs e)
         {
+            //    try
+            //    {
+            //        //frmUsed.Run(null);
+            //        clsProduct lcNewProduct = new clsProduct();
+            //        lcNewProduct.NewOrUsed = "U";
+            //        lcNewProduct.Category = lblCategoryName.Text;
+            //        frmProductDetail.DispatchWorkForm(lcNewProduct);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message, "This should never occur");
+            //    }
+
+            //    refreshFormFromDB(_Category.Category);
+            //    UpdateDisplay();
+            //
+            createNewProduct("U");
+        }
+
+
+        private void createNewProduct(string prType)
+        {
             try
             {
-                frmUsed.Run(null);
+                //frmNew.Run(null);
+                clsProduct lcNewProduct = new clsProduct() { DateModified = DateTime.Today };
+                lcNewProduct.NewOrUsed = prType;
+                lcNewProduct.Category = lblCategoryName.Text;
+                frmProductDetail.DispatchWorkForm(lcNewProduct);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "This should never occur");
             }
-        }
 
+            refreshFormFromDB(_Category.Category);
+            UpdateDisplay();
+        }
         private async void btnDeleteProduct_Click(object sender, EventArgs e)
         {
             MessageBox.Show(await ServiceClient.DeleteProductAsync(listProducts.SelectedItem as clsProduct));

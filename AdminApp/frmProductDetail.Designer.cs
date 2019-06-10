@@ -155,6 +155,7 @@
             // 
             // txtDateModified
             // 
+            this.txtDateModified.Enabled = false;
             this.txtDateModified.Location = new System.Drawing.Point(92, 179);
             this.txtDateModified.Name = "txtDateModified";
             this.txtDateModified.Size = new System.Drawing.Size(248, 20);

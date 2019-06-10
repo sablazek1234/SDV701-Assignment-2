@@ -14,8 +14,13 @@ namespace AdminApp
     {
         private static readonly frmProductDetail Instance = new frmProductDetail();
 
-        private static Dictionary<string, frmProductsList> _ProductsList =
-        new Dictionary<string, frmProductsList>();
+        public delegate void LoadWorkFormDelegate(clsProduct prProduct);
+
+        public static Dictionary<char, Delegate> _ProductsList = new Dictionary<char, Delegate>
+        {
+            {'N', new LoadWorkFormDelegate(frmNew.Run)},
+            {'U', new LoadWorkFormDelegate(frmUsed.Run)}
+        };
 
         protected clsProduct _Product;
 
@@ -26,7 +31,7 @@ namespace AdminApp
 
         public static void DispatchWorkForm(clsProduct prProduct)
         {
-            //_ProductsList[prProduct.ProductName].DynamicInvoke(prProduct);
+            _ProductsList[Convert.ToChar(prProduct.NewOrUsed)].DynamicInvoke(prProduct);
         }
 
         public static void Run(clsProduct prProduct)
@@ -43,12 +48,14 @@ namespace AdminApp
 
         protected virtual void updateForm()
         {
-            txtProductName.Text = _Product.ProductName.ToString();
-            txtProductType.Text = _Product.ProductType.ToString();
-            txtBrand.Text = _Product.Brand.ToString();
+            txtProductName.Text = _Product.ProductName;
+           // txtProductName.Enabled = string.IsNullOrEmpty(_Product.ProductName);
+            txtProductType.Text = _Product.ProductType;
+            txtBrand.Text = _Product.Brand;
             txtPrice.Text = _Product.Price.ToString();
             txtQuantity.Text = _Product.Quantity.ToString();
             txtDateModified.Text = _Product.DateModified.ToString();
+            Text = "Editing Product #" + _Product.ProductID;
         }
 
         protected virtual void pushData()
@@ -65,10 +72,9 @@ namespace AdminApp
         {
             if (isValid())
             {
+                _Product.DateModified = DateTime.Today;
                 pushData();
                 if (txtProductName.Enabled)
-                    MessageBox.Show(await ServiceClient.InsertProductAsync(_Product));
-                else
                     MessageBox.Show(await ServiceClient.UpdateProductAsync(_Product));
 
                 Close();

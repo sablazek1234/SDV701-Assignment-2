@@ -27,7 +27,7 @@ namespace AdminApp
         protected override void updateForm()
         {
             base.updateForm();
-            txtWarranty.Text = _Product.Warranty.ToString();
+            txtWarranty.Text = _Product.Warranty;
         }
 
         protected override void pushData()

@@ -27,7 +27,7 @@ namespace AdminApp
         protected override void updateForm()
         {
             base.updateForm();
-            txtCondition.Text = _Product.Condition.ToString();
+            txtCondition.Text = _Product.Condition;
         }
 
         protected override void pushData()

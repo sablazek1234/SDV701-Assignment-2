@@ -63,6 +63,7 @@ namespace APISelfHosted
             return new clsProduct()
             {
                 ProductID = Convert.ToInt16(prDataRow["ProductID"]),
+                Category = Convert.ToString(prDataRow["Category"]),
                 ProductName = Convert.ToString(prDataRow["ProductName"]),
                 ProductType = Convert.ToString(prDataRow["ProductType"]),
                 Brand = Convert.ToString(prDataRow["Brand"]),
@@ -144,7 +145,8 @@ namespace APISelfHosted
                 int lcRecCount = clsDBConnection.Execute("UPDATE tblProduct SET " +
                 "ProductName = @ProductName, ProductType = @ProductType, Brand = @Brand," +
                 "NewOrUsed = @NewOrUsed, Warranty = @Warranty, Condition = @Condition, Quantity = @Quantity," +
-                "DateModified = @DateModified, Price = @Price",
+                "DateModified = @DateModified, Price = @Price " +
+                "WHERE ProductID = @ProductID",
                 prepareProductParameters(prProduct));
                 if (lcRecCount == 1)
                     return "One product updated";
@@ -162,8 +164,8 @@ namespace APISelfHosted
             try
             {
                 int lcRecCount = clsDBConnection.Execute("INSERT INTO tblProduct " +
-                "(ProductID, ProductName, ProductType, Brand, NewOrUsed, Warranty, Condition, Quantity, DateModified) " +
-                "VALUES (@ProductID, @ProductName, @ProductType, @Brand, @NewOrUsed, @Warranty, @Condition, @Quantity, @DateModified, @Price)",
+                "(Category, ProductName, ProductType, Brand, NewOrUsed, Warranty, Condition, Quantity, DateModified, Price) " +
+                "VALUES (@Category, @ProductName, @ProductType, @Brand, @NewOrUsed, @Warranty, @Condition, @Quantity, @DateModified, @Price)",
                 prepareProductParameters(prProduct));
                 if (lcRecCount == 1)
                     return "One product inserted";
@@ -178,8 +180,9 @@ namespace APISelfHosted
 
         private Dictionary<string, object> prepareProductParameters(clsProduct prProduct)
         {
-            Dictionary<string, object> par = new Dictionary<string, object>(10);
+            Dictionary<string, object> par = new Dictionary<string, object>(11);
             par.Add("ProductID", prProduct.ProductID);
+            par.Add("Category", prProduct.Category);
             par.Add("ProductName", prProduct.ProductName);
             par.Add("ProductType", prProduct.ProductType);
             par.Add("Brand", prProduct.Brand);
