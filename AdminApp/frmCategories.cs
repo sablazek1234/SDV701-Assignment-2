@@ -29,28 +29,6 @@ namespace AdminApp
             get { return _Instance; }
         }
 
-        //public static void Run(string prCategoryName)
-        //{
-        //    frmCategories lcCategoryForm;
-        //    if (string.IsNullOrEmpty(prCategoryName) ||
-        //    !_CategoryList.TryGetValue(prCategoryName, out lcCategoryForm))
-        //    {
-        //        lcCategoryForm = new frmCategories();
-        //        if (string.IsNullOrEmpty(prCategoryName))
-        //            lcCategoryForm.SetDetails(new clsCategory());
-        //        else
-        //        {
-        //            _CategoryList.Add(prCategoryName, lcCategoryForm);
-        //            lcCategoryForm.refreshFormFromDB(prCategoryName);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        lcCategoryForm.Show();
-        //        lcCategoryForm.Activate();
-        //    }
-        //}
-
         private async void refreshFormFromDB(string prCategoryName)
         {
             SetDetails(await ServiceClient.GetCategoryAsync(prCategoryName));

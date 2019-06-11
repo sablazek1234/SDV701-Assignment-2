@@ -30,7 +30,8 @@ namespace AdminApp
 
         public override string ToString()
         {
-            return ProductName + "\t" + DateModified.ToShortDateString();
+            return ProductName + "\t" + ProductType + "\t" + Brand + "\t" + NewOrUsed + "\t" +
+            Quantity + "\t" + Price + "\t" + DateModified.ToShortDateString();
         }
 
         public static readonly string FACTORY_PROMPT = "Enter N for New and U for Used";

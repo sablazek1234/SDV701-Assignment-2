@@ -62,7 +62,7 @@ namespace AdminApp
             using (HttpClient lcHttpClient = new HttpClient())
             {
                 HttpResponseMessage lcRespMessage = await lcHttpClient.DeleteAsync
-            ($"http://localhost:60064/api/gallery/DeleteArtWork?WorkName={prProduct.ProductName}");
+            ($"http://localhost:60064/api/inventory/DeleteProduct?ProductName={prProduct.ProductName}");
                 return await lcRespMessage.Content.ReadAsStringAsync();
             }
 

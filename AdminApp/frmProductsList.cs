@@ -51,7 +51,6 @@ namespace AdminApp
             }
         }
 
-        //??????????????????????????????????????????????????????????????
         public async void ShowDialog(string prCategoryName)
         {
             _Category = await ServiceClient.GetCategoryAsync(prCategoryName);
@@ -73,7 +72,6 @@ namespace AdminApp
 
         private void UpdateDisplay()
         {
-
             lblCategoryName.Text = _Category.Category;
             lblDescription.Text = _Category.Description;
             listProducts.DataSource = null;
@@ -84,7 +82,6 @@ namespace AdminApp
             //    listProducts.DataSource = _Product.ProductList;
         }
 
-        //????????????????????????????????????????????????????
         public void SetDetails(clsCategory prCategory)
         {
             _Category = prCategory;
@@ -111,25 +108,8 @@ namespace AdminApp
 
         private void btnAddUsedProduct_Click(object sender, EventArgs e)
         {
-            //    try
-            //    {
-            //        //frmUsed.Run(null);
-            //        clsProduct lcNewProduct = new clsProduct();
-            //        lcNewProduct.NewOrUsed = "U";
-            //        lcNewProduct.Category = lblCategoryName.Text;
-            //        frmProductDetail.DispatchWorkForm(lcNewProduct);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show(ex.Message, "This should never occur");
-            //    }
-
-            //    refreshFormFromDB(_Category.Category);
-            //    UpdateDisplay();
-            //
             createNewProduct("U");
         }
-
 
         private void createNewProduct(string prType)
         {
@@ -149,9 +129,12 @@ namespace AdminApp
             refreshFormFromDB(_Category.Category);
             UpdateDisplay();
         }
+
         private async void btnDeleteProduct_Click(object sender, EventArgs e)
         {
             MessageBox.Show(await ServiceClient.DeleteProductAsync(listProducts.SelectedItem as clsProduct));
+            refreshFormFromDB(_Category.Category);
+            UpdateDisplay();
         }
 
         private void btnQuit_Click(object sender, EventArgs e)

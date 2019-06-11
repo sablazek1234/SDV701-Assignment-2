@@ -48,8 +48,9 @@ namespace AdminApp
 
         protected virtual void updateForm()
         {
+            _Product.DateModified = DateTime.Today;
             txtProductName.Text = _Product.ProductName;
-           // txtProductName.Enabled = string.IsNullOrEmpty(_Product.ProductName);
+            //txtProductName.Enabled = string.IsNullOrEmpty(_Product.ProductName);
             txtProductType.Text = _Product.ProductType;
             txtBrand.Text = _Product.Brand;
             txtPrice.Text = _Product.Price.ToString();
