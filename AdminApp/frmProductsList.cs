@@ -95,7 +95,7 @@ namespace AdminApp
             {
                 frmProductDetail.DispatchWorkForm(listProducts.SelectedValue as clsProduct);
                 refreshFormFromDB(_Category.Category);
-              //  UpdateDisplay();
+                //UpdateDisplay();
             }
             catch (Exception ex)
             {

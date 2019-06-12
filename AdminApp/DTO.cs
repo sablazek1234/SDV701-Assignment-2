@@ -48,7 +48,7 @@ namespace AdminApp
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public string CustomerName { get; set; }
-        public int CustomerPhone { get; set; }
+        public string CustomerPhone { get; set; }
         public DateTime DateOfPurchase { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }       

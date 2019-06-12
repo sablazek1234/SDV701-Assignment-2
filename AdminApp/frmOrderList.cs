@@ -53,14 +53,14 @@ namespace AdminApp
 
         public async void ShowDialog(string prOrderName)
         {
-            _Category = await ServiceClient.GetOrdersAsync(prOrderName);
+            _Category = await ServiceClient.GetOrderNamesAsync(prOrderName);
             UpdateDisplay();
             ShowDialog();
         }
 
         public async void refreshFormFromDB(string prOrder)
         {
-            clsCategory lcCategory = await ServiceClient.GetOrdersAsync(prOrder);
+            clsCategory lcCategory = await ServiceClient.GetOrderAsync(prOrder);
             SetDetails(lcCategory);
         }
 
@@ -76,9 +76,9 @@ namespace AdminApp
             listOrderDetails.DataSource = _Category.OrderList;
         }
 
-        public void SetDetails(clsCategory prOrder)
+        public void SetDetails(clsCategory prCategory)
         {
-            _Category = prOrder;
+            _Category = prCategory;
             UpdateDisplay();
             //  Show();
         }
@@ -87,9 +87,9 @@ namespace AdminApp
         {
             try
             {
-                frmOrderDetails.DispatchWorkForm(listOrderDetails.SelectedValue as clsCategory);
+                frmOrderDetails.DispatchWorkForm(listOrderDetails.SelectedValue as clsOrderDetails);
                 refreshFormFromDB(_Category.Category);
-                //  UpdateDisplay();
+                //UpdateDisplay();
             }
             catch (Exception ex)
             {
@@ -99,7 +99,7 @@ namespace AdminApp
 
         private async void btnDeleteOrder_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(await ServiceClient.DeleteOrderAsync(listOrderDetails.SelectedItem as clsCategory));
+            MessageBox.Show(await ServiceClient.DeleteOrderAsync(listOrderDetails.SelectedItem as clsOrderDetails));
             refreshFormFromDB(_Category.Category);
         }
 

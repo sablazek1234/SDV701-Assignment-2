@@ -41,9 +41,9 @@ namespace AdminApp
         protected virtual void updateForm()
         {
             _Orders.DateOfPurchase = DateTime.Today;
-            txtProductName.Text = _Orders.CustomerName;
-            txtProductType.Text = _Orders.CustomerPhone;
-            txtDateModified.Text = _Orders.DateOfPurchase.ToString();
+            txtCustomerName.Text = _Orders.CustomerName;
+            txtCustomerPhone.Text = _Orders.CustomerPhone;
+            txtDateOfPurchase.Text = _Orders.DateOfPurchase.ToString();
             txtPrice.Text = _Orders.Price.ToString();
             txtQuantity.Text = _Orders.Quantity.ToString();
             
@@ -52,11 +52,33 @@ namespace AdminApp
 
         protected virtual void pushData()
         {
-            _Orders.CustomerName = txtProductName.Text;
-            _Orders.CustomerPhone = txtProductType.Text;
-            _Orders.DateOfPurchase = DateTime.Parse(txtDateModified.Text);
+            _Orders.CustomerName = txtCustomerName.Text;
+            _Orders.CustomerPhone = txtCustomerPhone.Text;
+            _Orders.DateOfPurchase = DateTime.Parse(txtDateOfPurchase.Text);
             _Orders.Price = Decimal.Parse(txtPrice.Text);
             _Orders.Quantity = int.Parse(txtQuantity.Text);
+        }
+
+        private async void btnOK_Click(object sender, EventArgs e)
+        {
+            if (isValid())
+            {
+                _Orders.DateOfPurchase = DateTime.Today;
+                pushData();
+                MessageBox.Show(await ServiceClient.UpdateOrderAsync(_Orders));
+
+                Close();
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        protected virtual bool isValid()
+        {
+            return true;
         }
     }
 }

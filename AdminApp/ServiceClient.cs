@@ -65,14 +65,26 @@ namespace AdminApp
             ($"http://localhost:60064/api/inventory/DeleteProduct?ProductID={prProduct.ProductID}");
                 return await lcRespMessage.Content.ReadAsStringAsync();
             }
-
         }
 
-        internal async static Task<List<string>> GetOrdersAsync()
+        internal async static Task<List<string>> GetOrderNamesAsync()
         {
             using (HttpClient lcHttpClient = new HttpClient())
                 return JsonConvert.DeserializeObject<List<string>>
-            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetOrders/"));
+            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetOrderNames/"));
+        }
+
+        internal async static Task<clsOrderDetails> GetOrderAsync(string prOrderName)
+        {
+            using (HttpClient lcHttpClient = new HttpClient())
+                return JsonConvert.DeserializeObject<clsOrderDetails>
+            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetOrder?CustomerName=" + prOrderName));
+
+        }
+
+        internal async static Task<string> UpdateOrderAsync(clsOrderDetails _Order)
+        {
+            return await InsertOrUpdateAsync(_Order, "http://localhost:60064/api/inventory/PutOrder", "PUT");
         }
 
         internal async static Task<string> DeleteOrderAsync(clsOrderDetails prOrder)
@@ -83,7 +95,6 @@ namespace AdminApp
             ($"http://localhost:60064/api/inventory/DeleteOrder?OrderID={prOrder.OrderID}");
                 return await lcRespMessage.Content.ReadAsStringAsync();
             }
-
         }
     }
 }
