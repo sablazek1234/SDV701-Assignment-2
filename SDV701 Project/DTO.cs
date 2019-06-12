@@ -12,6 +12,7 @@ namespace APISelfHosted
         public string Description { get; set; }
 
         public List<clsProduct> ProductList { get; set; }
+        public List<clsOrderDetails> OrderList { get; set; }
     }
 
     public class clsProduct
@@ -28,5 +29,15 @@ namespace APISelfHosted
         public DateTime DateModified { get; set; }  
         public decimal Price { get; set; }
     }
-    
+
+    public class clsOrderDetails
+    {
+        public int OrderID { get; set; }
+        public int ProductID { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerPhone { get; set; }
+        public DateTime DateOfPurchase { get; set; }
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+    }
 }

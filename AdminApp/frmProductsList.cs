@@ -86,7 +86,7 @@ namespace AdminApp
         {
             _Category = prCategory;
             UpdateDisplay();
-            Show();
+          //  Show();
         }
 
         private void listProducts_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -94,6 +94,8 @@ namespace AdminApp
             try
             {
                 frmProductDetail.DispatchWorkForm(listProducts.SelectedValue as clsProduct);
+                refreshFormFromDB(_Category.Category);
+              //  UpdateDisplay();
             }
             catch (Exception ex)
             {
@@ -127,14 +129,14 @@ namespace AdminApp
             }
 
             refreshFormFromDB(_Category.Category);
-            UpdateDisplay();
+          //  UpdateDisplay();
         }
 
         private async void btnDeleteProduct_Click(object sender, EventArgs e)
         {
             MessageBox.Show(await ServiceClient.DeleteProductAsync(listProducts.SelectedItem as clsProduct));
             refreshFormFromDB(_Category.Category);
-            UpdateDisplay();
+         //   UpdateDisplay();
         }
 
         private void btnQuit_Click(object sender, EventArgs e)

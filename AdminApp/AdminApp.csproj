@@ -61,17 +61,23 @@
     <Compile Include="frmNew.Designer.cs">
       <DependentUpon>frmNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmOrderDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrderDetails.Designer.cs">
+      <DependentUpon>frmOrderDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmProductDetail.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmProductDetail.Designer.cs">
       <DependentUpon>frmProductDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmOrderDetails.cs">
+    <Compile Include="frmOrderList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmOrderDetails.Designer.cs">
-      <DependentUpon>frmOrderDetails.cs</DependentUpon>
+    <Compile Include="frmOrderList.Designer.cs">
+      <DependentUpon>frmOrderList.cs</DependentUpon>
     </Compile>
     <Compile Include="frmProductsList.cs">
       <SubType>Form</SubType>
@@ -100,11 +106,14 @@
     <EmbeddedResource Include="frmNew.resx">
       <DependentUpon>frmNew.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmOrderDetails.resx">
+      <DependentUpon>frmOrderDetails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmProductDetail.resx">
       <DependentUpon>frmProductDetail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmOrderDetails.resx">
-      <DependentUpon>frmOrderDetails.cs</DependentUpon>
+    <EmbeddedResource Include="frmOrderList.resx">
+      <DependentUpon>frmOrderList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductsList.resx">
       <DependentUpon>frmProductsList.cs</DependentUpon>

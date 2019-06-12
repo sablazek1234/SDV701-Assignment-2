@@ -12,6 +12,7 @@ namespace AdminApp
         public string Description { get; set; }
 
         public List<clsProduct> ProductList { get; set; }
+        public List<clsOrderDetails> OrderList { get; set; }
     }
 
     public class clsProduct
@@ -44,13 +45,18 @@ namespace AdminApp
 
     public class clsOrderDetails
     {
+        public int OrderID { get; set; }
         public int ProductID { get; set; }
         public string CustomerName { get; set; }
         public int CustomerPhone { get; set; }
-        public int Quantity { get; set; }
+        public DateTime DateOfPurchase { get; set; }
         public decimal Price { get; set; }
-        public DateTime DatePurchased { get; set; }
-
-        //public List<clsProduct> OrderDetailsList { get; set; }
-    }
+        public int Quantity { get; set; }       
+        
+        public override string ToString()
+        {
+            return CustomerName + "\t" + CustomerPhone + "\t" + DateOfPurchase.ToShortDateString() + "\t" + Price + "\t" +
+            Quantity;
+        }
+    }    
 }

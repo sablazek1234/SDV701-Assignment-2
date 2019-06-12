@@ -16,6 +16,8 @@ namespace AdminApp
 
         public delegate void LoadWorkFormDelegate(clsProduct prProduct);
 
+        private bool _IsNew = false;
+
         public static Dictionary<char, Delegate> _ProductsList = new Dictionary<char, Delegate>
         {
             {'N', new LoadWorkFormDelegate(frmNew.Run)},
@@ -42,6 +44,7 @@ namespace AdminApp
         public void SetDetails(clsProduct prProduct)
         {
             _Product = prProduct;
+            _IsNew = string.IsNullOrEmpty(_Product.ProductName);
             updateForm();
             ShowDialog();
         }
@@ -75,7 +78,9 @@ namespace AdminApp
             {
                 _Product.DateModified = DateTime.Today;
                 pushData();
-                if (txtProductName.Enabled)
+                if (_IsNew)
+                    MessageBox.Show(await ServiceClient.InsertProductAsync(_Product));
+                else
                     MessageBox.Show(await ServiceClient.UpdateProductAsync(_Product));
 
                 Close();

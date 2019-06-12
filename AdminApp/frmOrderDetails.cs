@@ -17,88 +17,46 @@ namespace AdminApp
             InitializeComponent();
         }
 
-        private static Dictionary<string, frmOrderDetails> _OrderDetailsList =
-        new Dictionary<string, frmOrderDetails>();
+        private static readonly frmOrderDetails Instance = new frmOrderDetails();       
 
-        public static void Run(string prOrderDetailsName)
+        protected clsOrderDetails _Orders;
+
+        //public static void DispatchWorkForm(clsOrderDetails prOrders)
+        //{
+        //    _ProductsList[Convert.ToChar(prOrders.)].DynamicInvoke(prOrders);
+        //}
+
+        public static void Run(clsOrderDetails prOrders)
         {
-            frmOrderDetails lcOrderDetailsForm;
-            if (string.IsNullOrEmpty(prOrderDetailsName) ||
-            !_OrderDetailsList.TryGetValue(prOrderDetailsName, out lcOrderDetailsForm))
-            {
-                lcOrderDetailsForm = new frmOrderDetails();
-                if (string.IsNullOrEmpty(prOrderDetailsName))
-                    lcOrderDetailsForm.SetDetails(new clsOrderDetails());
-                else
-                {
-                    _OrderDetailsList.Add(prOrderDetailsName, lcOrderDetailsForm);
-                    lcOrderDetailsForm.refreshFormFromDB(prOrderDetailsName);
-                }
-            }
-            else
-            {
-                lcOrderDetailsForm.Show();
-                lcOrderDetailsForm.Activate();
-            }
+            Instance.SetDetails(prOrders);
         }
 
-        private async void refreshFormFromDB(string prOrderDetailsName)
+        public void SetDetails(clsOrderDetails prOrders)
         {
-            //SetDetails(await ServiceClient.GetCategoryAsync(prOrderDetailsName));
+            _Orders = prOrders;
+            updateForm();
+            ShowDialog();
         }
 
-        private void updateTitle(string prInventoryName)
+        protected virtual void updateForm()
         {
-            if (!string.IsNullOrEmpty(prInventoryName))
-                Text = "Product Details - " + prInventoryName;
+            _Orders.DateOfPurchase = DateTime.Today;
+            txtProductName.Text = _Orders.CustomerName;
+            txtProductType.Text = _Orders.CustomerPhone;
+            txtDateModified.Text = _Orders.DateOfPurchase.ToString();
+            txtPrice.Text = _Orders.Price.ToString();
+            txtQuantity.Text = _Orders.Quantity.ToString();
+            
+            Text = "Editing Product #" + _Orders.OrderID;
         }
 
-        private void UpdateDisplay()
+        protected virtual void pushData()
         {
-            //listOrderDetails.DataSource = null;
-            //if (_OrderDetailsList.OrderDetailsList != null)
-            //    listOrderDetails.DataSource = _OrderDetailsList.OrderDetailsList;
-        }
-
-        public void SetDetails(clsOrderDetails prOrderDetails)
-        {
-            //_OrderDetailsList = prOrderDetails;
-            //UpdateDisplay();
-            //Show();
-        }
-
-        private void listOrderDetails_DoubleClick(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    frmOrderDetails.DispatchWorkForm(listOrderDetails.SelectedValue as clsProduct);
-            //    UpdateDisplay();
-            //    frmOrderDetails.Instance.UpdateDisplay();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-        }
-
-        private void frmOrderDetails_Load(object sender, EventArgs e)
-        {
-            UpdateDisplay();
-        }
-
-        private void btnCategories_Click(object sender, EventArgs e)
-        {
-            //frmCategories.Show();
-        }
-
-        private void btnDeleteOrder_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnQuit_Click(object sender, EventArgs e)
-        {
-            Close();
+            _Orders.CustomerName = txtProductName.Text;
+            _Orders.CustomerPhone = txtProductType.Text;
+            _Orders.DateOfPurchase = DateTime.Parse(txtDateModified.Text);
+            _Orders.Price = Decimal.Parse(txtPrice.Text);
+            _Orders.Quantity = int.Parse(txtQuantity.Text);
         }
     }
 }

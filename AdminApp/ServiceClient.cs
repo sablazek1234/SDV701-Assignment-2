@@ -62,7 +62,25 @@ namespace AdminApp
             using (HttpClient lcHttpClient = new HttpClient())
             {
                 HttpResponseMessage lcRespMessage = await lcHttpClient.DeleteAsync
-            ($"http://localhost:60064/api/inventory/DeleteProduct?ProductName={prProduct.ProductName}");
+            ($"http://localhost:60064/api/inventory/DeleteProduct?ProductID={prProduct.ProductID}");
+                return await lcRespMessage.Content.ReadAsStringAsync();
+            }
+
+        }
+
+        internal async static Task<List<string>> GetOrdersAsync()
+        {
+            using (HttpClient lcHttpClient = new HttpClient())
+                return JsonConvert.DeserializeObject<List<string>>
+            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetOrders/"));
+        }
+
+        internal async static Task<string> DeleteOrderAsync(clsOrderDetails prOrder)
+        {
+            using (HttpClient lcHttpClient = new HttpClient())
+            {
+                HttpResponseMessage lcRespMessage = await lcHttpClient.DeleteAsync
+            ($"http://localhost:60064/api/inventory/DeleteOrder?OrderID={prOrder.OrderID}");
                 return await lcRespMessage.Content.ReadAsStringAsync();
             }
 

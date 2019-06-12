@@ -71,14 +71,14 @@ namespace AdminApp
 
         private void btnOrders_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    frmOrderDetails.Run();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "This should never occur");
-            //}
+            try
+            {
+                clsOrderDetails lcOrder = new clsOrderDetails();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "This should never occur");
+            }
         }
 
         private void btnQuit_Click(object sender, EventArgs e)

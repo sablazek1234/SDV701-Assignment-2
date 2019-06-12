@@ -95,12 +95,15 @@ namespace APISelfHosted
             }
         }
 
-        public string DeleteProduct(string ProductName)
+        public string DeleteProduct(string ProductID)
         { 
             try
             {
+                Dictionary<string, object> par = new Dictionary<string, object>(3);
+                par.Add("ProductID", ProductID);
                 int lcRecCount = clsDBConnection.Execute(
-        "DELETE FROM tblProduct WHERE ProductName='" + ProductName, null);
+     //   "DELETE FROM tblProduct WHERE ProductID=" + ProductID, null);
+                "DELETE FROM tblProduct WHERE ProductID=@ProductID", par);
                 if (lcRecCount == 1)
                     return "One product deleted";
                 else
@@ -195,6 +198,43 @@ namespace APISelfHosted
             return par;
         }
 
+        public List<clsOrderDetails> GetOrders()
+        {
+            DataTable lcResult =
+            clsDBConnection.GetDataTable("SELECT * FROM tblOrderDetails", null);
+            List<clsOrderDetails> lcOrders = new List<clsOrderDetails>();
+            foreach (DataRow dr in lcResult.Rows)
+                lcOrders.Add(dataRowOrder(dr));
+            return lcOrders;
 
+        }
+
+        private clsOrderDetails dataRowOrder(DataRow prDataRow)
+        {
+            return new clsOrderDetails()
+            {
+                OrderID = Convert.ToInt16(prDataRow["OrderID"]),
+                ProductID = Convert.ToInt16(prDataRow["ProductID"]),
+                CustomerName = Convert.ToString(prDataRow["Category"]),
+                CustomerPhone = Convert.ToString(prDataRow["ProductName"]),
+                DateOfPurchase = Convert.ToDateTime(prDataRow["ProductType"]),                
+                Price = Convert.ToDecimal(prDataRow["Price"]),
+                Quantity = Convert.ToInt16(prDataRow["Quantity"]),
+            };
+
+        }
+
+        private Dictionary<string, object> prepareOrderParameters(clsOrderDetails prOrder)
+        {
+            Dictionary<string, object> par = new Dictionary<string, object>(7);
+            par.Add("OrderID", prOrder.OrderID);
+            par.Add("ProductID", prOrder.ProductID);
+            par.Add("CustomerName", prOrder.CustomerName);
+            par.Add("CustomerPhone", prOrder.CustomerPhone);
+            par.Add("DateOfPurchase", prOrder.DateOfPurchase);
+            par.Add("Price", prOrder.Price);
+            par.Add("Quantity", prOrder.Quantity);
+            return par;
+        }
     }
 }
