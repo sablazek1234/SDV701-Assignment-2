@@ -62,7 +62,7 @@
             this.btnQuit.UseVisualStyleBackColor = true;
             this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
-            // frmOrderDetails
+            // frmOrderList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -70,8 +70,9 @@
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnDeleteOrder);
             this.Controls.Add(this.listOrderDetails);
-            this.Name = "frmOrderDetails";
+            this.Name = "frmOrderList";
             this.Text = "frmOrderDetails";
+            this.Load += new System.EventHandler(this.frmOrderList_Load);
             this.ResumeLayout(false);
 
         }

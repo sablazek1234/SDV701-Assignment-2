@@ -14,6 +14,8 @@ namespace AdminApp
     {
         private clsCategory _Category = new clsCategory();
 
+       // private static frmOrderList _OrderListFom = new frmOrderList();
+
         private static readonly frmCategories _Instance = new frmCategories();
 
         private static Dictionary<string, frmCategories> _CategoryList =
@@ -73,7 +75,8 @@ namespace AdminApp
         {
             try
             {
-                clsOrderDetails lcOrder = new clsOrderDetails();
+                // clsOrderDetails lcOrder = new clsOrderDetails();
+                frmOrderList.Instance.ShowDialog();
             }
             catch (Exception ex)
             {

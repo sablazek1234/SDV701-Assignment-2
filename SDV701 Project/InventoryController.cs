@@ -201,7 +201,7 @@ namespace APISelfHosted
         public List<clsOrderDetails> GetOrders()
         {
             DataTable lcResult =
-            clsDBConnection.GetDataTable("SELECT * FROM tblOrderDetails", null);
+            clsDBConnection.GetDataTable("SELECT * FROM tblOrderDetails JOIN tblProduct ON tblOrderDetails.ProductID = tblProduct.ProductID", null);
             List<clsOrderDetails> lcOrders = new List<clsOrderDetails>();
             foreach (DataRow dr in lcResult.Rows)
                 lcOrders.Add(dataRowOrder(dr));
@@ -214,10 +214,11 @@ namespace APISelfHosted
             return new clsOrderDetails()
             {
                 OrderID = Convert.ToInt16(prDataRow["OrderID"]),
-                ProductID = Convert.ToInt16(prDataRow["ProductID"]),
-                CustomerName = Convert.ToString(prDataRow["Category"]),
-                CustomerPhone = Convert.ToString(prDataRow["ProductName"]),
-                DateOfPurchase = Convert.ToDateTime(prDataRow["ProductType"]),                
+           //     ProductID = Convert.ToInt16(prDataRow["ProductID"]),
+                ProductName = Convert.ToString(prDataRow["ProductName"]),
+                CustomerName = Convert.ToString(prDataRow["CustomerName"]),
+                CustomerPhone = Convert.ToString(prDataRow["CustomerPhone"]),
+                DateOfPurchase = Convert.ToDateTime(prDataRow["DateOfPurchase"]),                
                 Price = Convert.ToDecimal(prDataRow["Price"]),
                 Quantity = Convert.ToInt16(prDataRow["Quantity"]),
             };
@@ -235,6 +236,25 @@ namespace APISelfHosted
             par.Add("Price", prOrder.Price);
             par.Add("Quantity", prOrder.Quantity);
             return par;
+        }
+
+        public string DeleteOrder(string OrderID)
+        {
+            try
+            {
+                Dictionary<string, object> par = new Dictionary<string, object>(3);
+                par.Add("OrderID", OrderID);
+                int lcRecCount = clsDBConnection.Execute(
+                "DELETE FROM tblOrderDetails WHERE OrderID=@OrderID", par);
+                if (lcRecCount == 1)
+                    return "One order deleted";
+                else
+                    return "Unexpected order delete count: " + lcRecCount;
+            }
+            catch (Exception ex)
+            {
+                return ex.GetBaseException().Message;
+            }
         }
     }
 }

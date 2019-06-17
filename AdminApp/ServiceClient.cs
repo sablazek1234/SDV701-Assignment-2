@@ -74,6 +74,13 @@ namespace AdminApp
             (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetOrderNames/"));
         }
 
+        internal async static Task<List<clsOrderDetails>> GetOrdersAsync()
+        {
+            using (HttpClient lcHttpClient = new HttpClient())
+                return JsonConvert.DeserializeObject<List<clsOrderDetails>>
+            (await lcHttpClient.GetStringAsync("http://localhost:60064/api/inventory/GetOrders/"));
+        }
+
         internal async static Task<clsOrderDetails> GetOrderAsync(string prOrderName)
         {
             using (HttpClient lcHttpClient = new HttpClient())

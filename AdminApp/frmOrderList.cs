@@ -17,78 +17,80 @@ namespace AdminApp
             InitializeComponent();
         }
 
-        protected clsCategory _Category;
+        // protected clsCategory _Category;
+
+        private List<clsOrderDetails> _OrderList;
 
         private static readonly frmOrderList _Instance = new frmOrderList();
 
-        private static Dictionary<string, frmOrderList> _OrdersList =
-        new Dictionary<string, frmOrderList>();
+        //private static Dictionary<string, frmOrderList> _OrdersList =
+        //new Dictionary<string, frmOrderList>();
 
         public static frmOrderList Instance
         {
             get { return _Instance; }
         }
 
-        public static void Run(string prOrder)
-        {
-            frmOrderList lcOrderForm;
-            if (string.IsNullOrEmpty(prOrder) ||
-            !_OrdersList.TryGetValue(prOrder, out lcOrderForm))
-            {
-                lcOrderForm = new frmOrderList();
-                if (string.IsNullOrEmpty(prOrder))
-                    lcOrderForm.SetDetails(new clsCategory());
-                else
-                {
-                    _OrdersList.Add(prOrder, lcOrderForm);
-                    lcOrderForm.refreshFormFromDB(prOrder);
-                }
-            }
-            else
-            {
-                lcOrderForm.Show();
-                lcOrderForm.Activate();
-            }
-        }
+        //public static void Run(string prOrder)
+        //{
+        //    frmOrderList lcOrderForm;
+        //    if (string.IsNullOrEmpty(prOrder) ||
+        //    !_OrdersList.TryGetValue(prOrder, out lcOrderForm))
+        //    {
+        //        lcOrderForm = new frmOrderList();
+        //        if (string.IsNullOrEmpty(prOrder))
+        //            lcOrderForm.SetDetails(new clsCategory());
+        //        else
+        //        {
+        //            _OrdersList.Add(prOrder, lcOrderForm);
+        //            lcOrderForm.refreshFormFromDB(prOrder);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        lcOrderForm.Show();
+        //        lcOrderForm.Activate();
+        //    }
+        //}
 
-        public async void ShowDialog(string prOrderName)
+        //public async void ShowDialog(string prCategoryName)
+        //{
+        //    _Category = await ServiceClient.GetCategoryAsync(prCategoryName);
+        //    UpdateDisplay();
+        //    ShowDialog();
+        //}
+
+        public async void refreshFormFromDB()
         {
-            _Category = await ServiceClient.GetOrderNamesAsync(prOrderName);
+            _OrderList = await ServiceClient.GetOrdersAsync();
             UpdateDisplay();
-            ShowDialog();
         }
 
-        public async void refreshFormFromDB(string prOrder)
-        {
-            clsCategory lcCategory = await ServiceClient.GetOrderAsync(prOrder);
-            SetDetails(lcCategory);
-        }
-
-        private void updateTitle(string prInventoryName)
-        {
-            if (!string.IsNullOrEmpty(prInventoryName))
-                Text = "Product Details - " + prInventoryName;
-        }
+        //private void updateTitle(string prInventoryName)
+        //{
+        //    if (!string.IsNullOrEmpty(prInventoryName))
+        //        Text = "Product Details - " + prInventoryName;
+        //}
 
         private void UpdateDisplay()
         {
             listOrderDetails.DataSource = null;
-            listOrderDetails.DataSource = _Category.OrderList;
+            listOrderDetails.DataSource = _OrderList;
         }
 
-        public void SetDetails(clsCategory prCategory)
-        {
-            _Category = prCategory;
-            UpdateDisplay();
-            //  Show();
-        }
+        //public void SetDetails(clsCategory prCategory)
+        //{
+        //    _Category = prCategory;
+        //    UpdateDisplay();
+        //    //  Show();
+        //}
 
         private void listOrderDetails_DoubleClick(object sender, EventArgs e)
         {
             try
             {
-                frmOrderDetails.DispatchWorkForm(listOrderDetails.SelectedValue as clsOrderDetails);
-                refreshFormFromDB(_Category.Category);
+              ///  frmOrderDetails.DispatchWorkForm(listOrderDetails.SelectedValue as clsOrderDetails);
+               // refreshFormFromDB();
                 //UpdateDisplay();
             }
             catch (Exception ex)
@@ -100,12 +102,17 @@ namespace AdminApp
         private async void btnDeleteOrder_Click(object sender, EventArgs e)
         {
             MessageBox.Show(await ServiceClient.DeleteOrderAsync(listOrderDetails.SelectedItem as clsOrderDetails));
-            refreshFormFromDB(_Category.Category);
+            refreshFormFromDB();
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void frmOrderList_Load(object sender, EventArgs e)
+        {
+            refreshFormFromDB();
         }
     }
 }

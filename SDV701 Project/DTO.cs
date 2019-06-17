@@ -34,6 +34,7 @@ namespace APISelfHosted
     {
         public int OrderID { get; set; }
         public int ProductID { get; set; }
+        public string ProductName { get; set; }
         public string CustomerName { get; set; }
         public string CustomerPhone { get; set; }
         public DateTime DateOfPurchase { get; set; }

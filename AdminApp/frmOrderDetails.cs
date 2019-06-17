@@ -17,14 +17,17 @@ namespace AdminApp
             InitializeComponent();
         }
 
+        private static Dictionary<string, frmOrderList> _OrdersList =
+        new Dictionary<string, frmOrderList>();
+
         private static readonly frmOrderDetails Instance = new frmOrderDetails();       
 
         protected clsOrderDetails _Orders;
 
-        //public static void DispatchWorkForm(clsOrderDetails prOrders)
-        //{
-        //    _ProductsList[Convert.ToChar(prOrders.)].DynamicInvoke(prOrders);
-        //}
+        public static void DispatchWorkForm(clsOrderDetails prOrders)
+        {
+           // _OrdersList[Convert.ToString(prOrders.ProductID)].DynamicInvoke(prOrders);
+        }
 
         public static void Run(clsOrderDetails prOrders)
         {
@@ -45,8 +48,7 @@ namespace AdminApp
             txtCustomerPhone.Text = _Orders.CustomerPhone;
             txtDateOfPurchase.Text = _Orders.DateOfPurchase.ToString();
             txtPrice.Text = _Orders.Price.ToString();
-            txtQuantity.Text = _Orders.Quantity.ToString();
-            
+            txtQuantity.Text = _Orders.Quantity.ToString();            
             Text = "Editing Product #" + _Orders.OrderID;
         }
 
