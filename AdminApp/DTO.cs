@@ -31,8 +31,8 @@ namespace AdminApp
 
         public override string ToString()
         {
-            return ProductName + "\t" + ProductType + "\t" + Brand + "\t" + NewOrUsed + "\t" +
-            Quantity + "\t" + Price + "\t" + DateModified.ToShortDateString();
+            return "\t" + ProductName + "\t \v \t" + ProductType + "\t \v \t" + Brand + "\t \v \t" + NewOrUsed + "\t \v \t" +
+            Quantity + "\t \v \t" + Price + "\t \v \t" + DateModified.ToShortDateString();
         }
 
         public static readonly string FACTORY_PROMPT = "Enter N for New and U for Used";
@@ -56,8 +56,8 @@ namespace AdminApp
         
         public override string ToString()
         {
-            return CustomerName + "\t" + CustomerPhone + "\t" + DateOfPurchase.ToShortDateString() + "\t" + Price + "\t" +
-            Quantity + "\t" + ProductName;
+            return "\t" + CustomerName + "\t \v \t" + CustomerPhone + "\t \v \t" + DateOfPurchase.ToShortDateString() + "\t \v \t" + 
+            Price + "\t \v \t" + Quantity + "\t \v \t" + ProductName;
         }
     }    
 }
